@@ -8,7 +8,7 @@
     </el-breadcrumb>
     <!-- 卡片视图 -->
     <el-card>
-      <el-table :data="rightsList" border stripe style="width: 100%">
+      <el-table :data="showDataList" border stripe style="width: 100%">
         <el-table-column label="#" type="index"></el-table-column>
         <el-table-column prop="authName" label="权限名称"></el-table-column>
         <el-table-column prop="path" label="路径"></el-table-column>
@@ -22,6 +22,15 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 20, 25]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="rightsList.length"
+      ></el-pagination>
     </el-card>
   </div>
 </template>
@@ -32,7 +41,11 @@ export default {
   data() {
     return {
       //  权限列表
-      rightsList: []
+      rightsList: [],
+      pageSize: 5,
+      currentPage: 2,
+      // 当前要展示到页面上的数据
+      showDataList: []
     };
   },
   created() {
@@ -47,7 +60,27 @@ export default {
         return this.$message.error("获取权限列表失败！");
       }
       this.rightsList = res.data;
+      this.showData();
+      //数据分页
       console.log(this.rightsList);
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.showData();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.showData();
+    },
+    showData() {
+      this.showDataList = [];
+      // 从哪个下标开始
+      let start = (this.currentPage - 1) * this.pageSize;
+      // 循环的次数
+      let end = start + this.pageSize;
+      for (let i = start; i < end; i++) {
+        this.showDataList.push(this.rightsList[i]);
+      }
     }
   }
 };

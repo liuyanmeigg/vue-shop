@@ -56,7 +56,6 @@
                 </el-row>
               </el-col>
             </el-row>
-            <pre>{{scope.row}}</pre>
           </template>
         </el-table-column>
         <!-- 索引列 -->
