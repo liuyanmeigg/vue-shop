@@ -18,8 +18,8 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
-
 Vue.config.productionTip = false
+// 全局 axios 默认值
 // 请求的根路径
 axios.defaults.baseURL = "http://127.0.0.1:8888/api/private/v1/"
 // axios请求拦截器
@@ -42,8 +42,6 @@ Vue.filter('dateFormat', function (originVal) {
   const ss = (dt.getSeconds() + '').padStart(2, '0')
   return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
 }),
-
-
   Vue.prototype.$http = axios;
 Vue.use(ElementUI);
 // 将富文本编辑器注册为全局可用的组件

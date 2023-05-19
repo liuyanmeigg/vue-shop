@@ -30,14 +30,8 @@ const routes = [
       { path: '/goods/add', component: Add },
       { path: '/orders', component: Orders },
       { path: '/reports', component: Reports }
-
-
-
-
     ]
   },
-
-
 ]
 
 const router = new VueRouter({

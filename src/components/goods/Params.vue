@@ -8,7 +8,12 @@
     </el-breadcrumb>
     <!-- 卡片区域 -->
     <el-card>
-      <el-alert title="注意：只允许为第三级分类设置相关参数！" type="warning" show-icon :closable="false"></el-alert>
+      <el-alert
+        title="注意：只允许为第三级分类设置相关参数！"
+        type="warning"
+        show-icon
+        :closable="false"
+      ></el-alert>
       <!-- 选择商品分类 -->
       <el-row>
         <el-col class="cat_opt">
@@ -18,7 +23,7 @@
             v-model="selectedCateKeys"
             expand-trigger="hover"
             :options="CateList"
-            :props="{value:'cat_id',label: 'cat_name', }"
+            :props="{ value: 'cat_id', label: 'cat_name' }"
             @change="handleChange"
           ></el-cascader>
         </el-col>
@@ -28,7 +33,13 @@
         <!-- 添加动态参数的面板 -->
         <el-tab-pane label="动态参数" name="many">
           <!-- 添加参数按钮 -->
-          <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addParams">添加参数</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            :disabled="isBtnDisabled"
+            @click="addParams"
+            >添加参数</el-button
+          >
           <!-- 动态参数表格 -->
           <el-table :data="manyTableData" border stripe>
             <!-- 展开行 -->
@@ -36,11 +47,12 @@
               <template slot-scope="scope">
                 <!-- 循环渲染标签 -->
                 <el-tag
-                  v-for="(item,i) in scope.row.attr_vals"
+                  v-for="(item, i) in scope.row.attr_vals"
                   :key="i"
                   closable
-                  @close="handleClose(i,scope.row)"
-                >{{item}}</el-tag>
+                  @close="handleClose(i, scope.row)"
+                  >{{ item }}</el-tag
+                >
                 <!-- 输入文本框 -->
                 <el-input
                   class="input-new-tag"
@@ -56,12 +68,16 @@
                   class="button-new-tag"
                   size="small"
                   @click="showInput(scope.row)"
-                >+ New Tag</el-button>
+                  >+ New Tag</el-button
+                >
               </template>
             </el-table-column>
             <!-- 索引列 -->
             <el-table-column type="index" label="#"></el-table-column>
-            <el-table-column prop="attr_name" label="参数名称"></el-table-column>
+            <el-table-column
+              prop="attr_name"
+              label="参数名称"
+            ></el-table-column>
             <!-- 操作 -->
             <el-table-column label="操作">
               <template slot-scope="scope">
@@ -71,13 +87,15 @@
                     icon="el-icon-edit"
                     size="mini"
                     @click="editParams(scope.row.attr_id)"
-                  >修改</el-button>
+                    >修改</el-button
+                  >
                   <el-button
                     type="danger"
                     icon="el-icon-delete"
                     size="mini"
                     @click="removeParams(scope.row.attr_id)"
-                  >删除</el-button>
+                    >删除</el-button
+                  >
                 </el-row>
               </template>
             </el-table-column>
@@ -86,7 +104,13 @@
         <!-- 添加静态参数的面板 -->
         <el-tab-pane label="静态属性" name="only">
           <!-- 添加属性按钮 -->
-          <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addParams">添加属性</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            :disabled="isBtnDisabled"
+            @click="addParams"
+            >添加属性</el-button
+          >
           <!-- 静态属性表格 -->
           <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
@@ -94,11 +118,12 @@
               <template slot-scope="scope">
                 <!-- 循环渲染标签 -->
                 <el-tag
-                  v-for="(item,i) in scope.row.attr_vals"
+                  v-for="(item, i) in scope.row.attr_vals"
                   :key="i"
                   closable
-                  @close="handleClose(i,scope.row)"
-                >{{item}}</el-tag>
+                  @close="handleClose(i, scope.row)"
+                  >{{ item }}</el-tag
+                >
                 <!-- 输入文本框 -->
                 <el-input
                   class="input-new-tag"
@@ -114,12 +139,16 @@
                   class="button-new-tag"
                   size="small"
                   @click="showInput(scope.row)"
-                >+ New Tag</el-button>
+                  >+ New Tag</el-button
+                >
               </template>
             </el-table-column>
             <!-- 索引列 -->
             <el-table-column type="index" label="#"></el-table-column>
-            <el-table-column prop="attr_name" label="属性名称"></el-table-column>
+            <el-table-column
+              prop="attr_name"
+              label="属性名称"
+            ></el-table-column>
             <!-- 操作 -->
             <el-table-column label="操作">
               <template slot-scope="scope">
@@ -129,13 +158,15 @@
                     icon="el-icon-edit"
                     size="mini"
                     @click="editParams(scope.row.attr_id)"
-                  >修改</el-button>
+                    >修改</el-button
+                  >
                   <el-button
                     type="danger"
                     icon="el-icon-delete"
                     size="mini"
                     @click="removeParams(scope.row.attr_id)"
-                  >删除</el-button>
+                    >删除</el-button
+                  >
                 </el-row>
               </template>
             </el-table-column>
@@ -145,12 +176,16 @@
     </el-card>
     <!--   添加 对话框 -->
     <el-dialog
-      :title="'添加'+TextTitle"
+      :title="'添加' + TextTitle"
       :visible.sync="addDialogVisible"
       width="50%"
       @close="addParamsDialogClosed"
     >
-      <el-form ref="addParamsRef" :model="addParamsForm" :rules="addParamsDialogRules">
+      <el-form
+        ref="addParamsRef"
+        :model="addParamsForm"
+        :rules="addParamsDialogRules"
+      >
         <el-form-item :label="TextTitle" prop="attr_name" label-width="80px">
           <el-input v-model="addParamsForm.attr_name"></el-input>
         </el-form-item>
@@ -162,12 +197,16 @@
     </el-dialog>
     <!-- "修改" 对话框 -->
     <el-dialog
-      :title="'修改'+TextTitle"
+      :title="'修改' + TextTitle"
       :visible.sync="editDialogVisible"
       width="50%"
       @close="editParamsDialogClosed"
     >
-      <el-form ref="editParamsRef" :model="editParamsForm" :rules="addParamsDialogRules">
+      <el-form
+        ref="editParamsRef"
+        :model="editParamsForm"
+        :rules="addParamsDialogRules"
+      >
         <el-form-item :label="TextTitle" prop="attr_name" label-width="80px">
           <el-input v-model="editParamsForm.attr_name"></el-input>
         </el-form-item>
@@ -181,8 +220,9 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
-  name: "Params",
+  name: 'Params',
   data() {
     return {
       // @change="handleChange" 此事件的结果返回值就是选中的ID值的数组，数据放在了v-model="selectedCateKeys"
@@ -190,7 +230,7 @@ export default {
       selectedCateKeys: [],
       CateList: [],
       // 标签页双向绑定的标签名,也就是被激活的页签名称
-      activeName: "many",
+      activeName: 'many',
       // 动态参数的数据
       manyTableData: [],
       // 静态属性的数据
@@ -203,9 +243,9 @@ export default {
           {
             required: true,
             message: `请输入参数名称`,
-            trigger: "blur"
+            trigger: 'blur'
           },
-          { min: 2, max: 10, message: "长度在 2 到 10 个字符", trigger: "blur" }
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ]
       },
       // 控制修改对话框的显示与隐藏
@@ -232,18 +272,18 @@ export default {
       return null;
     },
     TextTitle() {
-      if (this.activeName === "many") {
-        return "动态参数";
+      if (this.activeName === 'many') {
+        return '动态参数';
       }
-      return "静态属性";
+      return '静态属性';
     }
   },
   methods: {
     // 获取所有商品分类列表
     async getCateList() {
-      const { data: res } = await this.$http.get("categories");
+      const { data: res } = await this.$http.get('categories');
       if (res.meta.status !== 200) {
-        return this.$message.error("获取商品数据列表失败！");
+        return this.$message.error('获取商品数据列表失败！');
       }
       this.CateList = res.data;
     },
@@ -269,18 +309,15 @@ export default {
         }
       );
       if (res.meta.status !== 200) {
-        return this.$message.error("获取商品参数列表失败！");
+        return this.$message.error('获取商品参数列表失败！');
       }
-      res.data.forEach(item => {
-        item.attr_vals = item.attr_vals ? item.attr_vals.split(" ") : [];
-        // 控制文本框的显示与隐藏
+      res.data.forEach((item) => {
+        item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : [];
         item.inputVisible = false;
-        // 文本框输入的值
-        item.inputValue = "";
+        item.inputValue = '';
       });
-      console.log(res.data);
 
-      if (this.activeName === "many") {
+      if (this.activeName === 'many') {
         this.manyTableData = res.data;
       } else {
         this.onlyTableData = res.data;
@@ -289,7 +326,7 @@ export default {
     // Tab页签点击事件的处理函数
     handleTabClick() {
       this.getParamsData();
-      // console.log(this.activeName); //结果是选中的标签名
+      // console.log(this.activeName); //选中的标签名
     },
     addParams() {
       this.addDialogVisible = true;
@@ -300,8 +337,8 @@ export default {
     },
     // 提交添加对话框
     ConfirmAddParams() {
-      this.$refs.addParamsRef.validate(async valid => {
-        if (!valid) return this.$message.warning("输入内容不能为空");
+      this.$refs.addParamsRef.validate(async (valid) => {
+        if (!valid) return this.$message.warning('输入内容不能为空');
         const { data: res } = await this.$http.post(
           `categories/${this.CateId}/attributes`,
           {
@@ -310,9 +347,9 @@ export default {
           }
         );
         if (res.meta.status !== 201) {
-          return this.$message.error("更新参数失败！");
+          return this.$message.error('更新参数失败！');
         }
-        this.$message.success("更新参数成功！");
+        this.$message.success('更新参数成功！');
         this.getParamsData();
         this.addDialogVisible = false;
       });
@@ -333,15 +370,15 @@ export default {
         }
       );
       if (res.meta.status !== 200) {
-        return this.$message.error("获取参数数据失败");
+        return this.$message.error('获取参数数据失败');
       }
       this.editParamsForm = res.data;
     },
     // 提交修改对话框数据
     ConfirmAEditParams() {
-      this.$refs.editParamsRef.validate(async valid => {
+      this.$refs.editParamsRef.validate(async (valid) => {
         if (!valid) {
-          return this.$message.warning("填写内容不规范");
+          return this.$message.warning('填写内容不规范');
         }
         const { data: res } = await this.$http.put(
           `categories/${this.CateId}/attributes/${this.editParamsForm.attr_id}`,
@@ -351,37 +388,36 @@ export default {
           }
         );
         if (res.meta.status !== 200) {
-          return this.$message.error("更新参数数据失败");
+          return this.$message.error('更新参数数据失败');
         }
         this.getParamsData();
-        this.$message.success("更新参数数据成功");
+        this.$message.success('更新参数数据成功');
         this.editDialogVisible = false;
       });
     },
     // 删除事件的监听
     async removeParams(id) {
       const confirmResult = await this.$confirm(
-        "此操作将永久删除该文件, 是否继续?",
-        "提示",
+        '此操作将永久删除该文件, 是否继续?',
+        '提示',
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         }
-      ).catch(err => err);
-      console.log(confirmResult);
+      ).catch((err) => err);
 
-      if (confirmResult !== "confirm") {
-        return this.$message.info("已取消删除");
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除');
       }
       const { data: res } = await this.$http.delete(
         `categories/${this.CateId}/attributes/${id}`
       );
       if (res.meta.status !== 200) {
-        return this.$message.error("删除参数数据失败");
+        return this.$message.error('删除参数数据失败');
       }
       this.getParamsData();
-      this.$message.success("删除参数数据成功");
+      this.$message.success('删除参数数据成功');
       this.editDialogVisible = false;
     },
     // 根据索引，监听标签的删除事件
@@ -396,24 +432,24 @@ export default {
         {
           attr_name: row.attr_name,
           attr_sel: row.attr_sel,
-          attr_vals: row.attr_vals.join(" ")
+          attr_vals: row.attr_vals.join(' ')
         }
       );
       if (res.meta.status !== 200) {
-        return this.$message.error("修改参数项失败");
+        return this.$message.error('修改参数项失败');
       }
-      this.$message.success("修改参数项成功");
+      this.$message.success('修改参数项成功');
     },
     // 文本框失去焦点或按下“enter”键都会触发
     handleInputConfirm(row) {
       if (row.inputValue.trim().length === 0) {
-        row.inputValue = "";
+        row.inputValue = '';
         row.inputVisible = false;
         return;
       }
       // 如果没有return则证明输入了内容，需要做后续处理
       row.attr_vals.push(row.inputValue.trim());
-      row.inputValue = "";
+      row.inputValue = '';
       row.inputVisible = false;
       // 需要发起请求，保存这次数据
       this.saveAttrVals(row);

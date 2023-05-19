@@ -11,31 +11,68 @@
       <!-- 搜索区域 -->
       <el-row>
         <el-col :span="8">
-          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getOrdersList">
-            <el-button slot="append" icon="el-icon-search" @click="getOrdersList"></el-button>
+          <el-input
+            placeholder="请输入内容"
+            v-model="queryInfo.query"
+            clearable
+            @clear="getOrdersList"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getOrdersList"
+            ></el-button>
           </el-input>
         </el-col>
       </el-row>
       <!-- 表格区域 -->
       <el-table border stripe :data="OrdersList">
         <el-table-column label="#" type="index"></el-table-column>
-        <el-table-column prop="order_number" label="订单编号" width="280px"></el-table-column>
-        <el-table-column prop="order_price" label="订单价格" width="80px"></el-table-column>
+        <el-table-column
+          prop="order_number"
+          label="订单编号"
+          width="280px"
+        ></el-table-column>
+        <el-table-column
+          prop="order_price"
+          label="订单价格"
+          width="80px"
+        ></el-table-column>
         <el-table-column prop="pay_status" label="是否付款" width="80px">
           <template slot-scope="scope">
             <!-- 注意：去接口文档看是  数值型1  还是  字符串‘1’ -->
-            <el-tag type="success" v-show="scope.row.pay_status === '1'">已付款</el-tag>
-            <el-tag type="danger" v-show="scope.row.pay_status === '0'">未付款</el-tag>
+            <el-tag type="success" v-show="scope.row.pay_status === '1'"
+              >已付款</el-tag
+            >
+            <el-tag type="danger" v-show="scope.row.pay_status === '0'"
+              >未付款</el-tag
+            >
           </template>
         </el-table-column>
-        <el-table-column prop="is_send" label="是否发货" width="80px"></el-table-column>
+        <el-table-column
+          prop="is_send"
+          label="是否发货"
+          width="80px"
+        ></el-table-column>
         <el-table-column prop="create_time" label="下单时间" width="200px">
-          <template slot-scope="scope">{{scope.row.create_time | dateFormat}}</template>
+          <template slot-scope="scope">{{
+            scope.row.create_time | dateFormat
+          }}</template>
         </el-table-column>
         <el-table-column label="操作" width="130px">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" circle @click="editAddress"></el-button>
-            <el-button type="success" icon="el-icon-location" circle @click="showProgress"></el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              circle
+              @click="editAddress"
+            ></el-button>
+            <el-button
+              type="success"
+              icon="el-icon-location"
+              circle
+              @click="showProgress"
+            ></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,10 +87,22 @@
         :total="total"
       ></el-pagination>
       <!--  修改地址   对话框 -->
-      <el-dialog title="修改地址" :visible.sync="addressVisible" width="30%" @close="editAddressClosed">
-        <el-form ref="editFormRef" :model="editAddressForm" :rules="editAddressRules">
+      <el-dialog
+        title="修改地址"
+        :visible.sync="addressVisible"
+        width="30%"
+        @close="editAddressClosed"
+      >
+        <el-form
+          ref="editFormRef"
+          :model="editAddressForm"
+          :rules="editAddressRules"
+        >
           <el-form-item label="省市区/县" prop="address1">
-            <el-cascader :options="cityData" v-model="editAddressForm.address1"></el-cascader>
+            <el-cascader
+              :options="cityData"
+              v-model="editAddressForm.address1"
+            ></el-cascader>
           </el-form-item>
           <el-form-item label="详细地址" prop="address2">
             <el-input v-model="editAddressForm.address2"></el-input>
@@ -61,7 +110,9 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="addressVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addressVisible = false">确 定</el-button>
+          <el-button type="primary" @click="addressVisible = false"
+            >确 定</el-button
+          >
         </span>
       </el-dialog>
       <!-- 展示物流进度的对话框 -->
@@ -76,7 +127,9 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="progressVisible = false">取 消</el-button>
-          <el-button type="primary" @click="progressVisible = false">确 定</el-button>
+          <el-button type="primary" @click="progressVisible = false"
+            >确 定</el-button
+          >
         </span>
       </el-dialog>
     </el-card>
@@ -84,16 +137,16 @@
 </template>
 
 <script>
-import cityData from "./citydata";
+import cityData from './citydata';
 export default {
-  name: "Order",
+  name: 'Order',
   data() {
     return {
-      searchInput: "",
+      searchInput: '',
       searchList: [],
       //   查询订单列表请求参数
       queryInfo: {
-        query: "",
+        query: '',
         pagenum: 1,
         pagesize: 5
       },
@@ -103,17 +156,17 @@ export default {
       // 修改对话框的数据
       editAddressForm: {
         address1: [],
-        address2: ""
+        address2: ''
       },
       addressVisible: false,
       progressVisible: false,
       progressInfo: [],
       editAddressRules: {
         address1: [
-          { required: true, message: "请选择省市区/县", trigger: "blur" }
+          { required: true, message: '请选择省市区/县', trigger: 'blur' }
         ],
         address2: [
-          { required: true, message: "请填写详细地址", trigger: "blur" }
+          { required: true, message: '请填写详细地址', trigger: 'blur' }
         ]
       }
     };
@@ -123,11 +176,11 @@ export default {
   },
   methods: {
     async getOrdersList() {
-      const { data: res } = await this.$http.get("orders", {
+      const { data: res } = await this.$http.get('orders', {
         params: this.queryInfo
       });
       if (res.meta.status !== 200) {
-        return this.$message.error("获取订单列表失败");
+        return this.$message.error('获取订单列表失败');
       }
       this.OrdersList = res.data.goods;
       this.total = res.data.total;
@@ -152,9 +205,9 @@ export default {
     },
     // 监听物流信息对话框的打开
     async showProgress() {
-      const { data: res } = await this.$http.get("/kuaidi/804909574412544580");
+      const { data: res } = await this.$http.get('/kuaidi/804909574412544580');
       if (res.meta.status !== 200) {
-        return this.$message.error("获取物流信息失败");
+        return this.$message.error('获取物流信息失败');
       }
       this.progressInfo = res.data;
       this.progressVisible = true;

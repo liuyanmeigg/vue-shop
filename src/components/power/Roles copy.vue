@@ -14,7 +14,7 @@
       </el-row>
       <!-- 角色列表区域 -->
       <el-table :data="rolesList" border stripe style="width: 100%">
-        <!-- 展开行 -->
+        <!-- 展开列 -->
         <el-table-column type="expand">
           <template slot-scope="scope">
             <el-row
@@ -26,7 +26,7 @@
               <el-col :span="5">
                 <el-tag
                   closable
-                  @close="removeRightById(scope.row, item1.id, item1.authName)"
+                  @close="removeRightById(scope.row, item1.id)"
                   >{{ item1.authName }}</el-tag
                 >
                 <i class="el-icon-caret-right"></i>
@@ -43,9 +43,7 @@
                     <el-tag
                       type="success"
                       closable
-                      @close="
-                        removeRightById(scope.row, item2.id, item2.authName)
-                      "
+                      @close="removeRightById(scope.row, item2.id)"
                       >{{ item2.authName }}</el-tag
                     >
                     <i class="el-icon-caret-right"></i>
@@ -57,9 +55,7 @@
                       v-for="(item3, i3) in item2.children"
                       :key="item3.id"
                       closable
-                      @close="
-                        removeRightById(scope.row, item3.id, item3.authName)
-                      "
+                      @close="removeRightById(scope.row, item3.id)"
                       >{{ item3.authName }}</el-tag
                     >
                   </el-col>
@@ -194,7 +190,6 @@ export default {
         children: 'children',
         label: 'authName'
       },
-      selectedName: '',
       // 当前即将分配权限的ID
       roleID: '',
       // 默认选中的节点ID数组
@@ -315,13 +310,11 @@ export default {
       this.$message.success('修改角色成功！');
       this.getRolesList();
     },
-
     // 根据ID删除权限
-    async removeRightById(role, rightId, name) {
-      this.selectedName = name;
+    async removeRightById(role, rightId) {
       // 弹窗提示是否删除
       const confirmResult = await this.$confirm(
-        `此操作将永久删除"${this.selectedName}"该文件, 是否继续?`,
+        '此操作将永久删除该文件, 是否继续?',
         '提示',
         {
           confirmButtonText: '确定',
@@ -338,7 +331,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('删除失败！');
       }
-      this.$message.success(`删除${this.selectedName}成功！`);
+      this.$message.success('删除成功！');
       // 不建议使用  this.getRolesList() 会出现整体页面的更新
       role.children = res.data;
     },
@@ -365,7 +358,6 @@ export default {
       }
       node.children.forEach((item) => this.getLeafKeys(item, arr));
     },
-
     // 监听分配权利对话框的关闭事件
     setRightsDialogClosed() {
       this.defaultKey = [];

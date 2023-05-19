@@ -42,25 +42,25 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       // 登录表单的数据绑定对象
       loginForm: {
-        username: "admin",
-        password: "12345"
+        username: 'admin',
+        password: '123456'
       },
       //   表单验证规则对象
       loginFormRules: {
         //   验证用户名是否合法
         username: [
-          { required: true, message: "请输入登录名称", trigger: "blur" },
-          { min: 3, max: 11, message: "长度在 3 到 11 个字符", trigger: "blur" }
+          { required: true, message: '请输入登录名称', trigger: 'blur' },
+          { min: 3, max: 11, message: '长度在 3 到 11 个字符', trigger: 'blur' }
         ],
         //   验证密码是否合法
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 3, max: 15, message: "长度在 3 到 10 个字符", trigger: "blur" }
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 3, max: 15, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ]
       }
     };
@@ -71,17 +71,17 @@ export default {
       this.$refs.loginFormRef.resetFields();
     },
     login() {
-      this.$refs.loginFormRef.validate(async valid => {
+      this.$refs.loginFormRef.validate(async (valid) => {
         //   valid 如果上面规则验证不通过则为：false
         // 所以可以通过valid知道是否通过  通过则发起请求
         // console.log(valid);
         if (!valid) return;
-        const { data: res } = await this.$http.post("login", this.loginForm);
-        // console.log(res);
-        if (res.meta.status !== 200) return this.$message.error("登录失败！");
-        this.$message.success("登录成功！");
-        window.sessionStorage.setItem("token", res.data.token);
-        this.$router.push("/home");
+        const { data: res } = await this.$http.post('login', this.loginForm);
+        console.log(res);
+        if (res.meta.status !== 200) return this.$message.error('登录失败！');
+        this.$message.success('登录成功！');
+        window.sessionStorage.setItem('token', res.data.token);
+        this.$router.push('/home');
       });
     }
   }
